@@ -110,7 +110,9 @@ public class AirportRepository {
     public int getNumberOfPeopleOn(Date date, String airportName) {
         //Calculate the total number of people who have flights on that day on a particular airport
         //This includes both the people who have come for a flight and who have landed on an airport after their flight
+        if(airportDb.get(airportName)==null) return 0;
         City currentCity=airportDb.get(airportName).getCity();
+
         int count=0;
         if(flightDb.size()!=0){
             for(Integer id:flightDb.keySet()){
