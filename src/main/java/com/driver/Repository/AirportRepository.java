@@ -25,10 +25,11 @@ public class AirportRepository {
 
     public String getLargestAirportName() {
         List<String> names=new ArrayList<>();
+        String singleName="";
         int max_terminals=0;
         for(String ele:airportDb.keySet()){
             int available_terminals=airportDb.get(ele).getNoOfTerminals();
-            if(available_terminals>max_terminals){
+            if(available_terminals>=max_terminals){
                 max_terminals=available_terminals;
                 names.add(ele);
             }
@@ -111,14 +112,18 @@ public class AirportRepository {
         //This includes both the people who have come for a flight and who have landed on an airport after their flight
         City currentCity=airportDb.get(airportName).getCity();
         int count=0;
-        for(Integer id:flightDb.keySet()){
-            Flight flightObj=flightDb.get(id);
-            if(flightObj.getFromCity().equals(currentCity)||flightObj.getToCity().equals(currentCity)){
-                if(flightObj.getFlightDate().equals(date)){
-                   count+=flightIdVsPassengerIdsDb.get(id).size();
+        if(flightDb.size()!=0){
+            for(Integer id:flightDb.keySet()){
+                Flight flightObj=flightDb.get(id);
+                if(flightObj.getFromCity().equals(currentCity)||flightObj.getToCity().equals(currentCity)){
+                    if(flightObj.getFlightDate().equals(date)){
+                        count+=flightIdVsPassengerIdsDb.get(id).size();
+                    }
                 }
             }
+
         }
+
         return count;
     }
 
